@@ -1,0 +1,838 @@
+{
+	"info": {
+		"name": "vBrownbag NSX API",
+		"_postman_id": "cf9b9347-2142-7f53-66a5-36ed64181509",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Configure Manager NTP",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "put",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<timeSettings>\n  <ntpServer>\n    <string>192.168.1.1</string>\n  </ntpServer>\n  <timezone>UTC</timezone>\n</timeSettings>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/1.0/appliance-management/system/timesettings",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"appliance-management",
+						"system",
+						"timesettings"
+					]
+				},
+				"description": "Configure time or specify the NTP server to use for time synchronization\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "2. Configure Manager Syslog",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "put",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<syslogserver>\n  <syslogServer>192.168.101.21</syslogServer>\n  <port>514</port>\n  <protocol>UDP</protocol>\n</syslogserver>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/1.0/appliance-management/system/syslogserver",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"1.0",
+						"appliance-management",
+						"system",
+						"syslogserver"
+					]
+				},
+				"description": "Configure syslog servers\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "3. Configure SSO",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<ssoConfig>\n  <ssoLookupServiceUrl>https://{{psc}}:443/lookupservice/sdk</ssoLookupServiceUrl>\n  <ssoAdminUsername>{{vcadmin}}</ssoAdminUsername>\n  <ssoAdminUserpassword>{{vcadminpass}}</ssoAdminUserpassword>\n  <certificateThumbprint></certificateThumbprint>\n</ssoConfig>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/services/ssoconfig",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"services",
+						"ssoconfig"
+					]
+				},
+				"description": "Register NSX Manager to SSO Services\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "4. Configure vCenter Server",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "put",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<vcInfo>\n  <ipAddress>{{vcenter}}</ipAddress>\n  <userName>{{vcadmin}}</userName>\n  <password>{{vcadminpass}}</password>\n  <certificateThumbprint>84:40:EE:A5:86:1E:75:14:3B:91:E5:DB:C5:F0:3A:CE:C9:C2:20:C2</certificateThumbprint>\n  <assignRoleToUser>true</assignRoleToUser>\n  <pluginDownloadServer></pluginDownloadServer>\n  <pluginDownloadPort></pluginDownloadPort>\n</vcInfo>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/services/vcconfig",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"services",
+						"vcconfig"
+					]
+				},
+				"description": "Synchronize NSX Manager with vCenter server\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "5. Create Controller IP Pool",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<ipamAddressPool>\n  <name>NSXControllers</name>\n  <prefixLength>24</prefixLength>\n  <gateway>192.168.205.1</gateway>\n  <dnsSuffix></dnsSuffix>\n  <dnsServer1></dnsServer1>\n  <dnsServer2></dnsServer2>\n  <ipRanges>\n    <ipRangeDto>\n      <startAddress>192.168.205.50</startAddress>\n      <endAddress>192.168.205.59</endAddress>\n    </ipRangeDto>\n  </ipRanges>\n</ipamAddressPool>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/services/ipam/pools/scope/{{scopeId}}",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"services",
+						"ipam",
+						"pools",
+						"scope",
+						"{{scopeId}}"
+					]
+				},
+				"description": "Create a pool of IP addresses\n\nParameters:\n\nscopeId: globalroot-0 or datacenterId in upgrade use cases\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "6. Deploy NSX Controller",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<controllerSpec>\n  <name>controller-1</name>\n  <description>nsx-controller-1</description>\n  <ipPoolId>ipaddresspool-1</ipPoolId>\n  <resourcePoolId>resgroup-8</resourcePoolId>\n  <datastoreId>datastore-17</datastoreId>\n  <networkId>dvportgroup-16</networkId>\n  <deployType>medium</deployType>\n  <password>{{nsxcontrollerpass}}</password>\n</controllerSpec>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/vdn/controller",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"vdn",
+						"controller"
+					]
+				},
+				"description": "Adds a new NSX controller on the specified given cluster. The hostId\nparameter is optional. The resourcePoolId can be either the clusterId or\nresourcePoolId. The IP address of the controller node will be allocated\nfrom the specified IP pool. deployType determines the controller node\nmemory size and can be small, medium, or large. However, different\ncontroller deployment types are not currently supported because the OVF\noverrides it and different OVF types require changes in the manager build\nscripts. Despite not being supported, an arbitrary deployType size must\nstill be specified or an error will be returned. Request without body to\nupgrade controller cluster.\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "7. Prepare hosts (install VIBs)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<nwFabricFeatureConfig>\n  <resourceConfig>\n    <resourceId>domain-c7</resourceId>\n  </resourceConfig>\n</nwFabricFeatureConfig>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/nwfabric/configure",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"nwfabric",
+						"configure"
+					]
+				},
+				"description": "You install the network infrastructure components in your virtual\nenvironment on a per‐cluster level for each vCenter server, which\ndeploys the required software on all hosts in the cluster. This software\nis also referred to as an NSX vSwitch. When a new host is added to this\ncluster, the required software is automatically installed on the newly\nadded host. After the network infrastructure is installed on a cluster,\nLogical Firewall is enabled on that cluster.\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "8. Create VTEP IP Pool",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<ipamAddressPool>\n  <name>NSXVTEPs</name>\n  <prefixLength>24</prefixLength>\n  <gateway>192.168.205.1</gateway>\n  <dnsSuffix></dnsSuffix>\n  <dnsServer1></dnsServer1>\n  <dnsServer2></dnsServer2>\n  <ipRanges>\n    <ipRangeDto>\n      <startAddress>192.168.205.60</startAddress>\n      <endAddress>192.168.205.69</endAddress>\n    </ipRangeDto>\n  </ipRanges>\n</ipamAddressPool>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/services/ipam/pools/scope/{{scopeId}}",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"services",
+						"ipam",
+						"pools",
+						"scope",
+						"{{scopeId}}"
+					]
+				},
+				"description": "Create a pool of IP addresses\n\nParameters:\n\nscopeId: globalroot-0 or datacenterId in upgrade use cases\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "9. Configure VXLAN",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<nwFabricFeatureConfig>\n  <featureId>com.vmware.vshield.vsm.vxlan</featureId>\n  <resourceConfig>\n    <resourceId>domain-c7</resourceId>\n    <configSpec class=\"clusterMappingSpec\">\n      <switch>\n        <objectId>dvs-14</objectId>\n      </switch>\n      <vlanId>0</vlanId>\n      <vmknicCount>1</vmknicCount>\n      <ipPoolId>ipaddresspool-2</ipPoolId>\n    </configSpec>\n  </resourceConfig>\n  <resourceConfig>\n    <resourceId>dvs-14</resourceId>\n      <configSpec class=\"vdsContext\">\n        <switch>\n          <objectId>dvs-14</objectId>\n        </switch>\n        <mtu>1600</mtu>\n        <teaming>FAILOVER_ORDER</teaming>\n      </configSpec>\n  </resourceConfig>\n</nwFabricFeatureConfig>"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/nwfabric/configure",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"nwfabric",
+						"configure"
+					]
+				},
+				"description": "This API call can be used to upgrade network virtualization components.\nAfter NSX Manager is upgraded, previously prepared clusters must have\nthe 6.x network virtualization components installed.\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "10. Create Segment ID pool",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<segmentRange>\n  <name>segment-pool</name>\n  <begin>5000</begin>\n  <end>9999</end>\n</segmentRange>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/vdn/config/segments",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"vdn",
+						"config",
+						"segments"
+					]
+				},
+				"description": "You can add a new segment ID range that provides virtual network\nidentifiers to logical switches. More than one segment ID range is\nsupported in the system. The segment range is inclusive – the beginning\nand ending IDs are included.\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "11. Create Transport Zone",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<vdnScope>\n  <name>Local-Transport-Zone</name>\n  <clusters>\n    <cluster>\n      <cluster>\n        <objectId>domain-c7</objectId>\n      </cluster>\n    </cluster>\n  </clusters>\n  <controlPlaneMode>UNICAST_MODE</controlPlaneMode>\n</vdnScope>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/vdn/scopes",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"vdn",
+						"scopes"
+					]
+				},
+				"description": "Create a new Transport Zone. Note that you can only add one initial\ncluster when creating the TZ. You must specify the clusters that are to\nbe part of the network scope. You must have the VLAN ID, UUID of the\nvCenter Server, and vDS ID.\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "13. Create a logical switch",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<virtualWireCreateSpec>\n  <name>TransitNetwork</name>\n  <description>NSX Transit Network</description>\n  <tenantId></tenantId>\n  <controlPlaneMode>UNICAST_MODE</controlPlaneMode>\n</virtualWireCreateSpec>\n"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/vdn/scopes/vdnscope-1/virtualwires",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"vdn",
+						"scopes",
+						"vdnscope-1",
+						"virtualwires"
+					]
+				},
+				"description": "Creates a logicalSwitch. To create a universal logical switch use the\nappropriate universal scope as the scopeId and use the primary NSX\nmanager.\n\n\nParameters:\n\nscopeId: A valid scope Id\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "14. Create an Edge",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<edge>\n    <datacenterMoid>datacenter-2</datacenterMoid>\n    <name>plr-1</name>\n    <description>Provider Logical Router</description>\n    <tenant></tenant>\n    <fqdn>plr-1</fqdn>\n    <appliances>\n        <applianceSize>compact</applianceSize>\n        <enableCoreDump>true</enableCoreDump>\n        <appliance>\n            <resourcePoolId>resgroup-8</resourcePoolId>\n            <datastoreId>datastore-17</datastoreId>\n        </appliance>\n    </appliances>\n    <vnics>\n        <vnic>\n            <label>vNic_0</label>\n            <name>uplink</name>\n            <addressGroups>\n                <addressGroup>\n                    <primaryAddress>192.168.205.200</primaryAddress>\n                    <subnetMask>255.255.255.0</subnetMask>\n                    <subnetPrefixLength>24</subnetPrefixLength>\n                </addressGroup>\n            </addressGroups>\n            <mtu>1500</mtu>\n            <type>uplink</type>\n            <isConnected>true</isConnected>\n            <index>0</index>\n            <portgroupId>dvportgroup-16</portgroupId>\n            <portgroupName>VLAN205</portgroupName>\n            <enableProxyArp>false</enableProxyArp>\n            <enableSendRedirects>false</enableSendRedirects>\n        </vnic>\n        <vnic>\n            <label>vNic_1</label>\n            <name>TransitNetwork</name>\n            <addressGroups>\n                <addressGroup>\n                    <primaryAddress>10.0.0.1</primaryAddress>\n                    <subnetMask>255.255.255.0</subnetMask>\n                    <subnetPrefixLength>24</subnetPrefixLength>\n                </addressGroup>\n            </addressGroups>\n            <mtu>1500</mtu>\n            <type>internal</type>\n            <isConnected>true</isConnected>\n            <index>1</index>\n            <portgroupId>virtualwire-1</portgroupId>\n            <portgroupName>TransitNetwork</portgroupName>\n            <enableProxyArp>false</enableProxyArp>\n            <enableSendRedirects>false</enableSendRedirects>\n        </vnic>\n    </vnics>\n    <cliSettings>\n        <userName>admin</userName>\n        <password>VMware12345!</password>\n        <remoteAccess>true</remoteAccess>\n    </cliSettings>\n    <autoConfiguration>\n        <enabled>true</enabled>\n        <rulePriority>high</rulePriority>\n    </autoConfiguration>\n</edge>"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/4.0/edges",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"4.0",
+						"edges"
+					]
+				},
+				"description": "Install NSX Edge services gateway or logical router, depending on request\nbody\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "15. Create a DLR Control VM",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{nsxadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{nsxadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "post",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<edge>\n    <datacenterMoid>datacenter-2</datacenterMoid>\n    <name>dlr-1</name>\n    <fqdn>dlr-1</fqdn>\n    <description>Distributed Logical Router</description>\n    <type>distributedRouter</type>\n    <appliances>\n        <applianceSize>compact</applianceSize>\n        <enableCoreDump>true</enableCoreDump>\n        <appliance>\n            <resourcePoolId>resgroup-8</resourcePoolId>\n            <datastoreId>datastore-17</datastoreId>\n        </appliance>\n    </appliances>\n    <mgmtInterface>\n        <connectedToId>virtualwire-3</connectedToId>\n        <addressGroups/>\n    </mgmtInterface>\n    <interfaces>\n        <interface>\n            <type>uplink</type>\n            <mtu>1500</mtu>\n            <isConnected>true</isConnected>\n            <addressGroups>\n                <addressGroup>\n                    <primaryAddress>10.0.0.2</primaryAddress>\n                    <subnetMask>255.255.255.0</subnetMask>\n                </addressGroup>\n            </addressGroups>\n            <connectedToId>virtualwire-3</connectedToId>\n        </interface>\n    </interfaces>\n</edge>"
+				},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/4.0/edges",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"4.0",
+						"edges"
+					]
+				},
+				"description": "Install NSX Edge services gateway or logical router, depending on request\nbody\n\n\nParameters:\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "00. Get Job from ID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{vcadmin}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{vcadminpass}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "get",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://{{nsxmanager}}/api/2.0/services/taskservice/job/jobdata-66",
+					"protocol": "https",
+					"host": [
+						"{{nsxmanager}}"
+					],
+					"path": [
+						"api",
+						"2.0",
+						"services",
+						"taskservice",
+						"job",
+						"jobdata-66"
+					]
+				},
+				"description": "Retrieve all job instances for the specified job ID\n\nParameters:\n\njobId: Specified job Id\n\n"
+			},
+			"response": []
+		}
+	]
+}
